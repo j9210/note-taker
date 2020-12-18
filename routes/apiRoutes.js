@@ -5,6 +5,7 @@ const path = require('path');
 const { v4: uuidv4 } = require("uuid");
 
 module.exports = (app) => {
+  // get the database info to show saved notes
   app.get('/api/notes', (req, res) => {
     var dbNotes = fs.readFileSync('db/db.json', "utf8");
     console.log(dbNotes)
@@ -13,29 +14,29 @@ module.exports = (app) => {
     res.json(notesArr)
   });
 
+  // post notes
   app.post('/api/notes', (req, res) => {
     const { title, text } = req.body;
-    var newNote = {title, text, id: uuidv4()}
-    console.log(newNote);
+    let newNote = {title, text, id: uuidv4()}
 
-   var dbNotes = fs.readFileSync('db/db.json', "utf8");
-   var notesArr = JSON.parse(dbNotes);
-
-   
-   notesArr = [...notesArr, newNote]
-   fs.writeFileSync("db/db.json", JSON.stringify(notesArr))
+    let dbNotes = fs.readFileSync('db/db.json', "utf8");
+    let notesArr = JSON.parse(dbNotes);
+    notesArr = [...notesArr, newNote]
+    
+    fs.writeFileSync("db/db.json", JSON.stringify(notesArr))
 
     res.json(newNote);
-    
   });
 
+  // delete notes
   app.delete('/api/notes/:id',(req, res) => {
     let noteId = req.params.id;
-    var dbNotes = fs.readFileSync('db/db.json', "utf8");
-    var notesArr = JSON.parse(dbNotes);  
-   let filterArr = notesArr.filter((note) => note.id !== noteId );
-   fs.writeFileSync("db/db.json", JSON.stringify(filterArr))
-   console.log("FILTER", filterArr)
+    let dbNotes = fs.readFileSync('db/db.json', "utf8");
+    let notesArr = JSON.parse(dbNotes);  
+    let filterArr = notesArr.filter((note) => note.id !== noteId );
+
+    fs.writeFileSync("db/db.json", JSON.stringify(filterArr))
+   
     res.json({ok: true})
   });
 }
