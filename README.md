@@ -2,7 +2,9 @@
    <img src = "https://img.shields.io/badge/License-ISC-red">
   ## Description
   A simple note taking application that allows users to write, save, view, and delete notes.
-  [Deployed Application](https://not3takr.herokuapp.com/)
+  
+  ## Deployed Application
+  https://not3takr.herokuapp.com/
   
   ## Screenshots
   ![Screenshot](public/assets/imgs/homepage.jpg)
